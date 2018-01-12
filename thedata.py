@@ -54,20 +54,26 @@ def read_csv_file(filename):
 def get_simple_model(row):
     if isinstance(row, list):
         res = dict()
-        res['id'] = row[-2]
+        # res['id'] = row[-2]
         res['label'] = row[-1].replace('\n', '')
         number = 0
-        for item in row[:-2]:
-            res['attr_%d' % number] = item
+        attrlist = ['Color', 'size', 'act', 'age']
+        for item in row[:-1]:
+            # res['attr_%d' % number] = item
+            res[attrlist[number]] = item
             number += 1
         return res
 
 
 def get_traindata():
-    return read_csv_file('dataset/audiology.standardized.data_dummy1')
+    return read_csv_file('dataset/adult+stretch.data.txt')
+    # return read_csv_file('dataset/audiology.standardized.data')
+    # return read_csv_file('dataset/audiology.standardized.data_dummy1')
     # return read_csv_file('dataset/bridges.data.version1.txt')
 
 
 def get_testdata():
-    return read_csv_file('dataset/audiology.standardized.test_dummy1')
+    return read_csv_file('dataset/adult+stretch.data.txt')
+    # return read_csv_file('dataset/audiology.standardized.test')
+    # return read_csv_file('dataset/audiology.standardized.test_dummy1')
     # return read_csv_file('dataset/bridges.data.version1.txt')

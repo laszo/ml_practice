@@ -18,6 +18,10 @@ def center_pt(pt1, pt2):
     return subx, suby
 
 
+def offset_pt(pt, x=0, y=0):
+    return pt[0] + x, pt[1] + y
+
+
 def arrow(pt1, pt2, text):
     center = center_pt(pt1, pt2)
     ax1.annotate(
@@ -38,7 +42,7 @@ def draw_tree(model, maxd, maxw, node_num_dict):
     ax1 = plt.subplot(111, frameon=False, **axprops)
     ax1.autoscale(False)
     plt.interactive(True)
-    plt.axis('on')
+    plt.axis('off')
     plt.show()
     _real_draw(model, maxd, maxw, node_num_dict)
 

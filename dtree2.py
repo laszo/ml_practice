@@ -18,8 +18,41 @@ def uniquelist(listobj):
     return list(set(listobj))
 
 
+def getpair(x, y):
+    return x, y
+
+
 def get_best_arrt(tdatalist, attrlist):
-    return attrlist[0]
+    bestattr = attrlist[0]
+    maxrate = 0
+
+    for attr in attrlist:
+
+        label_count_dict = dict()
+        for data in tdatalist:
+            value = attr_value(data, attr)
+            label = get_label(data)
+            pair = getpair(value, label)
+            if pair not in label_count_dict:
+                label_count_dict[pair] = 1
+            else:
+                label_count_dict[pair] += 1
+        all_labels = uniquelist(label_count_dict.keys())
+        max_label = all_labels[0]
+        max_count = label_count_dict[max_label]
+        for pair in label_count_dict.keys():
+            if max_count < label_count_dict[pair]:
+                max_label = pair
+                max_count = label_count_dict[pair]
+
+        crate = max_count / len(tdatalist)
+        # print(tdatalist, attrlist)
+        print(max_label, crate)
+
+        if maxrate < crate:
+            maxrate = crate
+            bestattr = attr
+    return bestattr
 
 
 def get_possable_values(tdatalist, arrt):
@@ -48,7 +81,7 @@ class DTreeModel(Model2Json):
         self.children = []  # child is also DTreeModel
         self.y = depth
         if depth not in node_num_dict:
-            node_num_dict[depth] = 1
+            node_num_dict[depth] = 0
         self.x = node_num_dict[depth]
         node_num_dict[depth] += 1
         global max_width
@@ -104,10 +137,13 @@ def get_attr_list(training_data):
 
 def train(training_data):
     attrlist = get_attr_list(training_data)
-    attrlist.remove('label')
-    attrlist.remove('id')
+    try:
+        attrlist.remove('label')
+        attrlist.remove('id')
+    except:
+        pass
     pre_attr_list = list(attrlist)
-    tree = make_dtree_node(training_data[:40], pre_attr_list[:20])
+    tree = make_dtree_node(training_data, pre_attr_list)
     return tree
 
 
