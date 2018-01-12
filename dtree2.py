@@ -87,6 +87,13 @@ class DTreeModel(Model2Json):
         global max_width
         if max_width < node_num_dict[depth]:
             max_width = node_num_dict[depth]
+        self.index_in_father = 0
+
+    def newick_text(self):
+        if self.children:
+            return '(%s)' % ','.join([child.newick_text() for child in self.children if child and child.newick_text() ])
+        return self.attr_name
+
 
     def __repr__(self):
         return json.dumps(self, default=Model2Json.json_dumps_default)
@@ -113,6 +120,7 @@ def make_dtree_node(tdatalist, pre_attrlist, depth=0):
     if max_depth < depth:
         max_depth = depth
     pre_attrlist.remove(battr)
+    index_in_father = 0
     for value in pvalues:
         subdatalist = get_sub_data_list(tdatalist, battr, value)
         if not subdatalist or not pre_attrlist:
@@ -123,7 +131,9 @@ def make_dtree_node(tdatalist, pre_attrlist, depth=0):
         if child:
             child.father_value = value
             child.father_attr_name = battr
+            child.index_in_father = index_in_father
             node.children.append(child)
+            index_in_father += 1
     return node
 
 
@@ -175,6 +185,7 @@ def main():
             wrong_num += 1
         all_num += 1
     print(right_num / all_num)
+    print(model.newick_text())
     pass
 
 

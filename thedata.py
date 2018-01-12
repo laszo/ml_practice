@@ -57,7 +57,7 @@ def get_simple_model(row):
         # res['id'] = row[-2]
         res['label'] = row[-1].replace('\n', '')
         number = 0
-        attrlist = ['Color', 'size', 'act', 'age']
+        attrlist = ['buying', 'maint', 'doors', 'persons', 'lug_boot', 'safety']
         for item in row[:-1]:
             # res['attr_%d' % number] = item
             res[attrlist[number]] = item
@@ -66,14 +66,16 @@ def get_simple_model(row):
 
 
 def get_traindata():
-    return read_csv_file('dataset/adult+stretch.data.txt')
+    return read_csv_file('dataset/car.data.txt')
+    # return read_csv_file('dataset/adult+stretch.data.txt')[1000:]
     # return read_csv_file('dataset/audiology.standardized.data')
     # return read_csv_file('dataset/audiology.standardized.data_dummy1')
     # return read_csv_file('dataset/bridges.data.version1.txt')
 
 
 def get_testdata():
-    return read_csv_file('dataset/adult+stretch.data.txt')
+    return read_csv_file('dataset/car.data.txt')[:100]
+    # return read_csv_file('dataset/adult+stretch.data.txt')[:-200]
     # return read_csv_file('dataset/audiology.standardized.test')
     # return read_csv_file('dataset/audiology.standardized.test_dummy1')
     # return read_csv_file('dataset/bridges.data.version1.txt')
