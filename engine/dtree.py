@@ -91,7 +91,7 @@ class DTreeModel(Model2Json):
 
     def newick_text(self):
         if self.children:
-            return '(%s)' % ','.join([child.newick_text() for child in self.children if child and child.newick_text() ])
+            return '(%s)' % ','.join([child.newick_text() for child in self.children if child and child.newick_text()])
         return self.attr_name
 
 
@@ -164,6 +164,20 @@ def predict(model, item):
         if child.father_value == attr_value(item, model.attr_name):
             label = predict(child, item)
             return label
+
+
+def train_dtree(data):
+    return ''
+
+
+def predict_data(tree, data):
+    return [
+        {
+            'label': predict(tree, item),
+            'id': attr_value(item, 'id')
+        }
+        for item in data
+    ]
 
 
 def main():
