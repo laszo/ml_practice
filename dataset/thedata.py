@@ -66,7 +66,8 @@ def get_simple_model(row):
 
 
 def get_traindata():
-    return read_csv_file('dataset/car.data.txt')
+    return read_csv_file('dataset/watermelon')
+    # return read_csv_file('dataset/car.data.txt')
     # return read_csv_file('dataset/adult+stretch.data.txt')[1000:]
     # return read_csv_file('dataset/audiology.standardized.data')
     # return read_csv_file('dataset/audiology.standardized.data_dummy1')
@@ -74,7 +75,8 @@ def get_traindata():
 
 
 def get_testdata():
-    return read_csv_file('dataset/car.data.txt')[:100]
+    return read_csv_file('dataset/watermelon')
+    # return read_csv_file('dataset/car.data.txt')[:100]
     # return read_csv_file('dataset/adult+stretch.data.txt')[:-200]
     # return read_csv_file('dataset/audiology.standardized.test')
     # return read_csv_file('dataset/audiology.standardized.test_dummy1')

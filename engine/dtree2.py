@@ -1,8 +1,45 @@
 from engine.dtree_base import *
 
 
-def get_best_arrt(tdata, attrs):
+def get_best_arrt_old(tdata, attrs):
     bestattr = attrs[0]
+    return bestattr
+
+
+def getpair(x, y):
+    return x, y
+
+
+def get_best_arrt(tdatalist, attrlist):
+    bestattr = attrlist[0]
+    maxrate = 0
+
+    for attr in attrlist:
+
+        label_count_dict = dict()
+        for data in tdatalist:
+            value = attr_value(data, attr)
+            label = get_label(data)
+            pair = getpair(value, label)
+            if pair not in label_count_dict:
+                label_count_dict[pair] = 1
+            else:
+                label_count_dict[pair] += 1
+        all_labels = uniquelist(label_count_dict.keys())
+        max_label = all_labels[0]
+        max_count = label_count_dict[max_label]
+        for pair in label_count_dict.keys():
+            if max_count < label_count_dict[pair]:
+                max_label = pair
+                max_count = label_count_dict[pair]
+
+        crate = max_count / len(tdatalist)
+        # print(tdatalist, attrlist)
+        print(max_label, crate)
+
+        if maxrate < crate:
+            maxrate = crate
+            bestattr = attr
     return bestattr
 
 

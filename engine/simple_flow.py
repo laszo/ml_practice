@@ -1,7 +1,8 @@
 from dataset.loader import load as loaddata
-from dataset.loader import get_train_data_file, get_test_data_file, get_data_attrs
+from dataset.loader import get_train_data_file, get_test_data_file
 from engine.dtree2 import make_dtree_node, predict_data
 from tool import attr_value
+from visualization.drawer2 import do_draw
 
 
 def test_result(item):
@@ -16,10 +17,10 @@ def get_result_rate(result):
 
 
 def run_the_flow():
-    train_data = loaddata(get_train_data_file())
-    attrs = get_data_attrs()
+    train_data, attrs = loaddata(get_train_data_file())
     dtree = make_dtree_node(train_data, attrs)
-    test_data = loaddata(get_test_data_file())
+    do_draw(dtree)
+    test_data, tattrs = loaddata(get_test_data_file())
     result = predict_data(dtree, test_data)
     rate = get_result_rate(result)
     print(rate)
