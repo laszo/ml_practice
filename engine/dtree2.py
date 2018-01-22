@@ -10,6 +10,63 @@ def getpair(x, y):
     return x, y
 
 
+def cul_entropy(thelist):
+    def p_x(x, _tlist):
+        return _tlist.count(x) / len(_tlist)
+
+    import math
+    states = set(thelist)
+    num = 0
+    for s in states:
+        px = p_x(s, thelist)
+        num += px * math.log2(px)
+    return 0 - num
+
+
+def get_sub_sets(cattr, _attrs, _data):
+    attr_index = list(_attrs).index(cattr)
+    data_attr_label_pair = [[line[attr_index], line[-1]] for line in data]
+    attr_value_set = set([a[0] for a in data_attr_label_pair])
+    sub_sets = dict()
+    for at in attr_value_set:
+        if at not in sub_sets:
+            sub_sets[at] = list()
+        for item in _data:
+            if item[0] == at:
+                sub_sets[at].append(item[1])
+    return sub_sets
+
+
+def attr_zengyi(cattr, _attrs, _data):
+    attr_index = list(_attrs).index(cattr)
+    data_attr_label_pair = [[line[attr_index], line[-1]] for line in data]
+    attr_value_set = set([a[0] for a in data_attr_label_pair])
+    sub_sets = dict()
+    for at in attr_value_set:
+        if at not in sub_sets:
+            sub_sets[at] = list()
+        for item in _data:
+            if item[0] == at:
+                sub_sets[at].append(item[1])
+    maxe = 0
+    maxk = list(sub_sets.keys())[0]
+    for k in sub_sets:
+        ent = cul_entropy(sub_sets[k])
+        if maxe < ent:
+            maxe = ent
+            maxk = k
+        print(cattr, k, ent)
+    # print(sub_sets)
+    return maxk, maxe
+
+
+def best_attr_1(tattrs, tdata):
+    for ta in tattrs:
+        print('----------')
+        foo = attr_zengyi(ta, tattrs, tdata)
+        print(':', ta, foo)
+
+
 def get_best_arrt(tdatalist, attrlist):
     bestattr = attrlist[0]
     maxrate = 0

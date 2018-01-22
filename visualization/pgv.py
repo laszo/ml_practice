@@ -20,5 +20,5 @@ def show():
     _A.write('simple.dot')  # write to simple.dot
     b = pgv.AGraph('simple.dot')  # create a new graph from file
     b.layout()  # layout with default (neato)
-    print(b)
+    # print(b)
     b.draw('simple.png')  # draw png
